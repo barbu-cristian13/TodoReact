@@ -7,11 +7,11 @@ var $ = require('jQuery');
 var AddTodo = require('AddTodo');
 
 describe('AddTodo', () => {
-  if('should exist', () => {
+  it('should exist', () => {
     expect(AddTodo).toExist();
   });
 
-  if('should call onAddTodo prop with valid data', () => {
+  it('should call onAddTodo prop with valid data', () => {
     var todoText = 'Check mail';
     var spy = expect.createSpy();
     var addTodo = TestUtils.renderIntoDocument(<AddTodo onAddTodo={spy}/>);
@@ -22,7 +22,7 @@ describe('AddTodo', () => {
 
     expect(spy).toHaveBeenCalledWith(todoText);
   });
-  if('should not call onAddTodo prop when invalid data', () => {
+  it('should not call onAddTodo prop when invalid data', () => {
     var todoText = '';
     var spy = expect.createSpy();
     var addTodo = TestUtils.renderIntoDocument(<AddTodo onAddTodo={spy}/>);
