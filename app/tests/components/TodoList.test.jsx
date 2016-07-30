@@ -22,6 +22,7 @@ describe('TodoList', () => {
     var todoList = TestUtils.renderIntoDocument(<TodoList todoArray={todoArray}/>);
     var todoComponents = TestUtils.scryRenderedComponentsWithType(todoList, Todo);
     //find all nested components
+
     expect(todoComponents.length).toBe(todoArray.length);
   });
 });
