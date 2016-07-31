@@ -24,7 +24,7 @@
 
 .todo-completed {
   p, .todo__subtext{
-    color: $light-gray;
+    color: $light-grey-completed;
     text-decoration: line-through;
   }
 }
