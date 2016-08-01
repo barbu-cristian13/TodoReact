@@ -11,17 +11,17 @@ var TodoAPI = require('TodoAPI');
 
 import './firebase/index';
 
-var unsubscribe = store.subscribe(() => {
-  var state = store.getState();
-  console.log('New state', state);
-
-  TodoAPI.setTodos(state.todoArray);
-});
+// var unsubscribe = store.subscribe(() => {
+//   var state = store.getState();
+//   console.log('New state', state);
+//
+//   TodoAPI.setTodos(state.todoArray);
+// });
 
 //populate with saved data
-var initialTodos = TodoAPI.getTodos();
-store.dispatch(actions.addTodoArray(initialTodos));
-
+// var initialTodos = TodoAPI.getTodos();
+// store.dispatch(actions.addTodoArray(initialTodos));
+store.dispatch(actions.startAddTodoArray());
 //populate with other data
 // if(store.getState().todoArray.length === 0){
 //   store.dispatch(actions.toggleShowCompleted());
