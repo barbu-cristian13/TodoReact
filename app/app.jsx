@@ -21,17 +21,18 @@ var initialTodos = TodoAPI.getTodos();
 store.dispatch(actions.addTodoArray(initialTodos));
 
 //populate with other data
-store.dispatch(actions.toggleShowCompleted());
-store.dispatch(actions.addTodoArray([{
-  completed: true,
-  createdAt: 1470045545,
-  completedAt: 1470045587,
-  id: 'd98ea959-5d5b-4aa4-a4e9-cb927c930771',
-  text: 'Learn React'
-}]));
-store.dispatch(actions.addTodo('Design Project'));
-store.dispatch(actions.addTodo('Finish Project'));
-
+if(store.getState().todoArray.length === 0){
+  store.dispatch(actions.toggleShowCompleted());
+  store.dispatch(actions.addTodoArray([{
+    completed: true,
+    createdAt: 1470045545,
+    completedAt: 1470045587,
+    id: 'd98ea959-5d5b-4aa4-a4e9-cb927c930771',
+    text: 'Learn React'
+  }]));
+  store.dispatch(actions.addTodo('Design Project'));
+  store.dispatch(actions.addTodo('Finish Project'));
+}
 //Load foundation
 $(document).foundation();
 
