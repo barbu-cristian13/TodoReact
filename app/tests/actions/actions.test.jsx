@@ -82,18 +82,24 @@ describe('actions', () => {
       type: 'LOGOUT'
     };
     var res = actions.logout();
-    
+
     expect(res).toEqual(action);
   });
 
   describe('Tests with firebase todos', () => {
     var testTodoRef;
-
+    var uid;
+    var todoRef;
     beforeEach((done) => {
-      var todosRef = firebaseRef.child('todoArray');
+      var credential = firebase.auth.GithubAuthProvider.credential(process.env.GITHUB_ACCESS_TOKEN);
 
-      todosRef.remove().then(()=> {
-        testTodoRef = firebaseRef.child('todoArray').push();
+      firebase.auth().signInWithCredential(credential).then((user) => {
+        uid = user.uid;
+        todoRef = firebaseRef.child(`users/${uid}/todoArray`);
+
+        return todoRef.remove();
+      }).then(()=> {
+        testTodoRef = todoRef.push();
 
         testTodoRef.set({
           text: 'some-test',
@@ -104,10 +110,10 @@ describe('actions', () => {
     });
 
     afterEach((done) => {
-      testTodoRef.remove().then(() => done());
+      todoRef.remove().then(() => done());
     });
     it('should create todo and dispatch ADD_TODO', (done) =>{
-      const store = createMockStore({});
+      const store = createMockStore({auth: {uid: uid}});
       const action = actions.startAddTodo('some-test');
 
       store.dispatch(action).then(() => {
@@ -124,7 +130,7 @@ describe('actions', () => {
     });
 
     it('should populate todos and dispatch ADD_TODO_ARRAY', (done) =>{
-      const store = createMockStore({});
+      const store = createMockStore({auth: {uid: uid}});
       const action = actions.startAddTodoArray();
 
       store.dispatch(action).then(() => {
@@ -137,7 +143,7 @@ describe('actions', () => {
       }, done).catch(done);
     });
     it('should toggle todo and dispatch UPDATE_TODO', (done) => {
-      const store = createMockStore({});
+      const store = createMockStore({auth: {uid: uid}});
       const action = actions.startToggleTodo(testTodoRef.key, true);
 
       store.dispatch(action).then(() => {
