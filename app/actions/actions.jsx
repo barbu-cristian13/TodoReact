@@ -42,16 +42,33 @@ export var startAddTodo = (text) => {
   };
 };
 
-export var toggleTodo = (id) => {
-  return {
-    type: 'TOGGLE_TODO',
-    id: id
-  };
-};
-
 export var addTodoArray = (todoArray) => {
   return {
     type: 'ADD_TODO_ARRAY',
     todoArray: todoArray
   }
+};
+
+export var updateTodo = (id, updates) => {
+  return {
+    type: 'UPDATE_TODO',
+    id: id,
+    updates: updates
+  };
+};
+
+export var startToggleTodo = (id, completed) => {
+  return (dispatch, getState) => {
+    //var todoRef = firebaseRef.child('todo/' + id);
+    var todoRef = firebaseRef.child(`todoArray/${id}`);
+
+    var updates = {
+      completed: completed,
+      completedAt: completed ? moment().unix(): null
+    };
+
+    return todoRef.update(updates).then(() => {
+      dispatch(updateTodo(id, updates));
+    })
+  };
 };
