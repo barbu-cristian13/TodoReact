@@ -7,15 +7,18 @@ var TodoApp = require('TodoApp');
 
 var actions = require('actions');
 var store = require('configureStore').configure();
+var TodoAPI = require('TodoAPI');
 
 var unsubscribe = store.subscribe(() => {
-  console.log('New state', store.getState());
+  var state = store.getState();
+  console.log('New state', state);
+
+  TodoAPI.setTodos(state.todoArray);
 });
 
-// store.dispatch(actions.addTodo('Clean the yard'));
-// store.dispatch(actions.setSearchText('yard'));
-// store.dispatch(actions.toggleShowCompleted());
-
+//populate with saved data
+var initialTodos = TodoAPI.getTodos();
+store.dispatch(actions.addTodoArray(initialTodos));
 //Load foundation
 $(document).foundation();
 

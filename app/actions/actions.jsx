@@ -24,3 +24,10 @@ export var toggleTodo = (id) => {
     id: id
   };
 };
+
+export var addTodoArray = (todoArray) => {
+  return {
+    type: 'ADD_TODO_ARRAY',
+    todoArray: todoArray
+  }
+};

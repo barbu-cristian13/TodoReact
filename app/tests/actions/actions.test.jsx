@@ -22,6 +22,23 @@ describe('actions', () => {
 
   });
 
+  it('should generate addTodoArray action object', () => {
+    var todos = [{
+      id: '111',
+      text: 'anything',
+      completed: false,
+      completedAt: undefined,
+      createdAt: 33000
+    }];
+    var action = {
+      type: 'ADD_TODOS_ARRAY',
+      todoArray: todos
+    }
+    var res = actions.addTodoArray(action.todoArray);
+
+    expect(res).toEqual(action);
+  });
+
   it('should generate toggle show completed action', () => {
     var action = {
       type: 'TOGGLE_SHOW_COMPLETED'
@@ -38,4 +55,5 @@ describe('actions', () => {
     var res = actions.toggleTodo(action.id);
     expect(res).toEqual(action);
   })
+
 });
